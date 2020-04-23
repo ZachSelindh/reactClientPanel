@@ -1,11 +1,13 @@
-import firebase from "firebase/app";
-import "firebase/auth";
-import "firebase/firestore";
-
 import { createStore, combineReducers, compose } from "redux";
+import firebase from "firebase";
+import "firebase/firestore";
 import { firebaseReducer } from "react-redux-firebase";
-import { createFirestoreInstance, firestoreReducer } from "redux-firestore"; // <- needed if using firestore
+import { firestoreReducer, createFirestoreInstance } from "redux-firestore";
 
+//Custom reducers
+// @todo
+
+// Firebase config from firebase console
 const firebaseConfig = {
   apiKey: "AIzaSyCMspBSF7xS_7A2N-MXNJGulwGBLyMtzfc",
   authDomain: "reactclientpanel-ad545.firebaseapp.com",
@@ -20,27 +22,30 @@ const firebaseConfig = {
 // react-redux-firebase config
 const rrfConfig = {
   userProfile: "users",
+  useFirestoreForProfile: true,
 };
 
-// Initialize firebase instance
+// Init firebase instance
 firebase.initializeApp(firebaseConfig);
 
-// Initialize other services on firebase instance
-firebase.firestore();
+// Init firestore
+// const firestore = firebase.firestore();
 
-// Add firebase to reducers
 const rootReducer = combineReducers({
   firebase: firebaseReducer,
   firestore: firestoreReducer,
 });
 
-// Create store with reducers and initial state
+// Create initial state
 const initialState = {};
+
+// Create store
 const store = createStore(
   rootReducer,
   initialState,
   compose(
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    window.__REDUX_DEVTOOLS_EXTENDSION__ &&
+      window.__REDUX_DEVTOOLS_EXTENSION__()
   )
 );
 
@@ -48,7 +53,7 @@ const rrfProps = {
   firebase,
   config: rrfConfig,
   dispatch: store.dispatch,
-  createFirestoreInstance,
+  createFirestoreInstance, // <- needed if using firestore
 };
 
 export { store, rrfProps };
