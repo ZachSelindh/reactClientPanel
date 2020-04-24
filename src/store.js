@@ -7,9 +7,9 @@ import { firebaseReducer } from "react-redux-firebase";
 import { createFirestoreInstance, firestoreReducer } from "redux-firestore"; // <- needed if using firestore
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCMspBSF7xS_7A2N-MXNJGulwGBLyMtzfc",
-  authDomain: "reactclientpanel-ad545.firebaseapp.com",
-  databaseURL: "https://reactclientpanel-ad545.firebaseio.com",
+  apiKey: process.env.REACT_APP_FIREBASE_KEY,
+  authDomain: process.env.REACT_APP_AUTH_URL,
+  databaseURL: process.env.REACT_APP_DATABASE_URL,
   projectId: "reactclientpanel-ad545",
   storageBucket: "reactclientpanel-ad545.appspot.com",
   messagingSenderId: "1006880168780",
