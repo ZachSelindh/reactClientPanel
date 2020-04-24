@@ -5,6 +5,7 @@ import { ReactReduxFirebaseProvider } from "react-redux-firebase";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import AppNavBar from "./components/layout/AppNavBar";
 import Dashboard from "./components/layout/Dashboard";
+import AddClient from "./components/clients/AddClient";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
             <div className="container">
               <Switch>
                 <Route exact path="/" component={Dashboard} />
+                <Route exact path="/client/add" component={AddClient} />
               </Switch>
             </div>
           </div>
