@@ -8,16 +8,70 @@ import Spinner from "../layout/Spinner";
 import classnames from "classnames";
 
 class ClientDetails extends Component {
+  state = {
+    showBalanaceUpdate: false,
+    balanceUpdateAmount: "",
+  };
+
+  onChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
+  balanceSubmit = (e) => {
+    e.preventDefault();
+    const { client, firestore } = this.props;
+    const { balanceUpdateAmount } = this.state;
+
+    const clientUpdate = {
+      balance: parseFloat(balanceUpdateAmount),
+    };
+
+    // Update in firestore
+    firestore.update({ collection: "clients", doc: client.id }, clientUpdate);
+  };
+
+  toggleBalance = () => {
+    this.setState({ showBalanaceUpdate: !this.state.showBalanaceUpdate });
+  };
+
   render() {
     const { client } = this.props;
+    const { showBalanaceUpdate, balanceUpdateAmount } = this.state;
+
+    let balanceForm = "";
+
+    if (showBalanaceUpdate) {
+      balanceForm = (
+        <form onSubmit={this.balanceSubmit}>
+          <div className="input-group">
+            <input
+              className="form-control"
+              type="text"
+              name="balanceUpdateAmount"
+              placeholder="Add New Balance"
+              value={balanceUpdateAmount}
+              onChange={this.onChange}
+            ></input>
+            <div className="input-group-append">
+              <input
+                type="submit"
+                value="Update"
+                className="btn btn-outline-dark"
+              ></input>
+            </div>
+          </div>
+        </form>
+      );
+    } else {
+      balanceForm = null;
+    }
     if (client) {
       return (
         <div>
           <div className="row">
             <div className="col-md-6">
               <Link to="/" className="btn btn-link">
-                <i className="fas fa-arrow-circle-left" />
-                Back To Dashboard
+                <i className="fas fa-arrow-circle-left" /> Back To Dashboard
               </Link>
             </div>
             <div className="col-md-6">
@@ -48,13 +102,19 @@ class ClientDetails extends Component {
                     <span
                       className={classnames({
                         "text-danger": client.balance > 0,
-                        "text-success": client.balance === 0,
+                        "text-success":
+                          client.balance === "0" || client.balance === 0,
                       })}
                     >
                       ${parseFloat(client.balance).toFixed(2)}
                     </span>
+                    <small>
+                      <a href="#!" onClick={this.toggleBalance}>
+                        <i className="fas fa-pencil-alt"></i>
+                      </a>
+                    </small>
                   </h3>
-                  {/* Todo balance form */}
+                  {balanceForm}
                 </div>
               </div>
             </div>
