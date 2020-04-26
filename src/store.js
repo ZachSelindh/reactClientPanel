@@ -20,6 +20,7 @@ const firebaseConfig = {
 // react-redux-firebase config
 const rrfConfig = {
   userProfile: "users",
+  useFirestoreForProfile: true,
 };
 
 // Initialize firebase instance
