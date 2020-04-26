@@ -25,7 +25,6 @@ class AppNavBar extends Component {
 
     const { firebase } = this.props;
     firebase.logout();
-    window.location.href = "/";
   };
 
   render() {
