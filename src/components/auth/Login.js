@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-// import { compose } from "redux";
-// import { connect } from "react-redux";
-import { firebaseConnect } from "react-redux-firebase";
+import { compose } from "redux";
+import { connect } from "react-redux";
+import { firestoreConnect } from "react-redux-firebase";
 import PropTypes from "prop-types";
 
 class Login extends Component {
@@ -78,4 +78,7 @@ Login.propTypes = {
   firebase: PropTypes.object.isRequired,
 };
 
-export default firebaseConnect()(Login);
+export default compose(
+  firestoreConnect(),
+  connect((state, props) => ({ notify: state.notify }))
+)(Login);
