@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-redux-firebase";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {
@@ -9,8 +9,72 @@ import {
 } from "../../actions/settingsActions";
 
 class Settings extends Component {
+  allowRegistrationChange = () => {
+    const { setAllowRegistration } = this.props;
+    setAllowRegistration();
+  };
+
+  disableBalanceOnAddChange = () => {
+    const { setDisableBalanceOnAdd } = this.props;
+    setDisableBalanceOnAdd();
+  };
+
+  disableBalanceOnEditChange = () => {
+    const { setDisableBalanceOnEdit } = this.props;
+    setDisableBalanceOnEdit();
+  };
+
   render() {
-    return <div />;
+    const {
+      disableBalanceOnAdd,
+      disableBalanceOnEdit,
+      allowRegistration,
+    } = this.props.settings;
+    return (
+      <div>
+        <div className="row">
+          <div className="col-md-6">
+            <Link to="/" className="btn btn-link">
+              <i className="fas fa-arrow-circle-left"></i> Back To Dashboard
+            </Link>
+          </div>
+        </div>
+        <div className="card">
+          <div className="card-header">Edit Settings</div>
+          <div className="card-body">
+            <form>
+              <div className="form-group">
+                <label>Allow Registration</label>{" "}
+                <input
+                  type="checkbox"
+                  name="allowRegistration"
+                  checked={!!allowRegistration}
+                  onChange={this.allowRegistrationChange}
+                />
+              </div>
+              <div className="form-group">
+                <label>Disable Balance On Add</label>{" "}
+                <input
+                  type="checkbox"
+                  name="disableBalanceOnAdd"
+                  checked={!!disableBalanceOnAdd}
+                  onChange={this.disableBalanceOnAddChange}
+                />
+              </div>
+              <div className="form-group">
+                <label>Disable Balance On Edit</label>{" "}
+                <input
+                  type="checkbox"
+                  name="disableBalanceOnEdit"
+                  checked={!!disableBalanceOnEdit}
+                  onChange={this.disableBalanceOnEditChange}
+                />
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    );
   }
 }
 
