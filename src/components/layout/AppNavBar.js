@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
 import { compose } from "redux";
 import { connect } from "react-redux";
@@ -54,25 +54,30 @@ class AppNavBar extends Component {
                   </Link>
                 </li>
               ) : null}
+              {isAuthenticated ? (
+                <Fragment>
+                  <li className="nav-item">
+                    <a href="#!" className="nav-link">
+                      {auth.email}
+                    </a>
+                  </li>
+                  <li className="nav-item">
+                    <Link to="/settings" className="nav-link">
+                      Settings
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <a
+                      href="#!"
+                      className="nav-link"
+                      onClick={this.onLogoutClick}
+                    >
+                      Logout
+                    </a>
+                  </li>
+                </Fragment>
+              ) : null}
             </ul>
-            {isAuthenticated ? (
-              <ul className="navbar-nav ml-auto">
-                <li className="nav-item">
-                  <a href="#!" className="nav-link">
-                    {auth.email}
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a
-                    href="#!"
-                    className="nav-link"
-                    onClick={this.onLogoutClick}
-                  >
-                    Logout
-                  </a>
-                </li>
-              </ul>
-            ) : null}
           </div>
         </div>
       </nav>
@@ -83,11 +88,13 @@ class AppNavBar extends Component {
 AppNavBar.propTypes = {
   firebase: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
+  settings: PropTypes.object.isRequired,
 };
 
 export default compose(
   firebaseConnect(),
   connect((state, props) => ({
     auth: state.firebase,
+    settings: state.settings,
   }))
 )(AppNavBar);

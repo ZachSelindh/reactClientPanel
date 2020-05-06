@@ -39,8 +39,22 @@ const rootReducer = combineReducers({
   settings: settingsReducer,
 });
 
+// Check for settings in localStorage
+if (localStorage.getItem("settings") == null) {
+  // Default settings
+  const defaultSettings = {
+    allowRegistration: false,
+    disableBalanceOnAdd: true,
+    disableBalanceOnEdit: false,
+  };
+  // Set to localStorage
+  localStorage.setItem("settings", JSON.stringify(defaultSettings));
+}
+
 // Create store with reducers and initial state
-const initialState = {};
+const initialState = { settings: JSON.parse(localStorage.getItem("settings")) };
+
+// Create store
 const store = createStore(
   rootReducer,
   initialState,
