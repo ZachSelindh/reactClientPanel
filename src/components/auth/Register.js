@@ -29,7 +29,6 @@ class Register extends Component {
 
     const { firebase, notifyUser } = this.props;
     const { email, password } = this.state;
-    // Register with firebase
 
     firebase
       .createUser({ email, password })
